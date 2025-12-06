@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的世界 | Minecraft服务器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: '微软雅黑', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f0f0f0;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCI+PHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjZTBmMGYwIi8+PHBhdGggZD0iTTAgMEw4MCA4ME04MCAwTDAgODAiIHN0cm9rZT0iI2QwZDBkMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+');
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCI+PHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjOWVhODZjIi8+PHBhdGggZD0iTTAgMEw4MCA4ME04MCAwTDAgODAiIHN0cm9rZT0iIzhlOTc1YyIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+');
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 5px solid #e74c3c;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            color: #2ecc71;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .server-info {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .info-item {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .info-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .info-item h3 {
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid #2ecc71;
+        }
+        
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-card h3::before {
+            content: "■";
+            color: #e74c3c;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .rules {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #f39c12;
+        }
+        
+        .rules-list {
+            list-style-type: none;
+            margin-top: 1rem;
+        }
+        
+        .rules-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed #ddd;
+            display: flex;
+        }
+        
+        .rules-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .rules-list li::before {
+            content: "✦";
+            color: #e74c3c;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .join-section {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid #9b59b6;
+        }
+        
+        .ip-address {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 1.5rem;
+            display: inline-block;
+            margin: 1rem 0;
+            letter-spacing: 2px;
+            user-select: all;
+            cursor: pointer;
+        }
+        
+        .ip-address:hover {
+            background: #1a2530;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 1rem 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+        
+        .btn-discord {
+            background: #7289da;
+        }
+        
+        .btn-discord:hover {
+            background: #5b6eae;
+        }
+        
+        .btn-download {
+            background: #27ae60;
+        }
+        
+        .btn-download:hover {
+            background: #219653;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .staff-team {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #1abc9c;
+        }
+        
+        .staff-members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .staff-member {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            width: 150px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .staff-member h4 {
+            color: #e74c3c;
+            margin: 0.5rem 0 0;
+        }
+        
+        .staff-member p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .ip-address {
+                font-size: 1.2rem;
+                padding: 0.8rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>我的世界服务器</h1>
+            <p class="subtitle">一个充满创意与冒险的Minecraft社区</p>
+            <p>版本: 1.21.4 | 在线玩家: 3/114514 | 运行时间: 24/7</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="server-info">
+            <h2>关于我们</h2>
+            <p>欢迎来到我的世界！我们是一个友好、活跃的Minecraft服务器社区，致力于为所有玩家提供最佳的游戏体验。无论你是建筑大师、红石工程师还是探险爱好者，在这里都能找到属于你的乐趣。</p>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>生存模式</h3>
+                    <p>经典生存体验，丰富的自定义玩法</p>
+                </div>
+                <div class="info-item">
+                    <h3>创造模式</h3>
+                    <p>无限资源，尽情发挥你的创造力</p>
+                </div>
+                <div class="info-item">
+                    <h3>小游戏</h3>
+                    <p>多种趣味小游戏等你挑战</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <h3>经济系统</h3>
+                <p>完善的经济体系，通过挖矿、建造、任务获得金币，可在商店购买稀有物品和地产。</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>领地保护</h3>
+                <p>独创的领地系统，保护你的建筑不被破坏，支持权限设置和共享。</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>定期活动</h3>
+                <p>每周举办建筑比赛、寻宝活动、PVP锦标赛等丰富活动，赢取丰厚奖励。</p>
+            </div>
+        </section>
+
+        <section class="rules">
+            <h2>服务器规则</h2>
+            <ul class="rules-list">
+                <li>禁止使用作弊程序和非法客户端</li>
+                <li>尊重其他玩家，禁止恶意攻击、侮辱或骚扰</li>
+                <li>不得破坏他人建筑或领地</li>
+                <li>禁止刷屏、 spam 或发布广告</li>
+                <li>遵守管理员指示，维护服务器秩序</li>
+                <li>合理使用聊天频道，保持良好交流环境</li>
+            </ul>
+        </section>
+
+        <section class="staff-team">
+            <h2>管理团队</h2>
+            <div class="staff-members">
+                <div class="staff-member">
+                    <h4>chyuxiao</h4>
+                    <p>服主</p>
+                </div>
+                <div class="staff-member">
+                    <h4>chyuxiao0622</h4>
+                    <p>管理员</p>
+                </div>
+                <div class="staff-member">
+                    <h4>chyuxiao0622</h4>
+                    <p>建筑师</p>
+                </div>
+                <div class="staff-member">
+                    <h4>chyuxiao0622</h4>
+                    <p>活动策划</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="join-section">
+            <h2>加入我们的世界</h2>
+            <p>准备好开始你的冒险了吗？现在就加入我们吧！</p>
+            <div class="ip-address" id="serverIP">frp-act.com:61896</div>
+            <p>点击IP地址可复制，然后在Minecraft多人游戏中添加服务器</p>
+            
+            <div>
+                <button class="btn btn-download" id="downloadBtn">下载资源包</button>
+                <a href="https://discord.gg/your-server" class="btn btn-discord" target="_blank">加入Discord</a>
+            </div>
+        </section>
+    </div>
+
+    <div class="notification" id="notification">IP地址已复制到剪贴板!</div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 "my craft" Minecraft服务器. 保留所有权利.</p>
+            <p>推荐使用 Minecraft Java Edition 1.21.4 Fabric 版本获得最佳体验</p>
+        </div>
+    </footer>
+
+    <script>
+        // 下载资源包功能
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            // 创建一个隐藏的 a 标签用于触发下载
+            const link = document.createElement('a');
+            link.href = 'minecraftPC小服务器.mrpack';
+            link.download = 'minecraftPC小服务器.mrpack';
+            link.style.display = 'none';
+            
+            // 将链接添加到页面并触发点击事件
+            document.body.appendChild(link);
+            link.click();
+            
+            // 清理 DOM
+            document.body.removeChild(link);
+        });
+        
+        // 复制 IP 地址功能
+        document.getElementById('serverIP').addEventListener('click', function() {
+            const ipText = this.innerText;
+            navigator.clipboard.writeText(ipText).then(() => {
+                // 显示通知
+                const notification = document.getElementById('notification');
+                notification.classList.add('show');
+                
+                // 3秒后隐藏通知
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+                alert('复制失败，请手动选择并复制IP地址');
+            });
+        });
+    </script>
+</body>
+</html>
